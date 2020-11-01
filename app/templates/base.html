@@ -5,9 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+
 
     <link rel="stylesheet" href="{{ url_for('static', filename = 'styles.css') }}">
 
@@ -31,10 +33,12 @@
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
                         <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
-                        <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+                        <a class="nav-item nav-link"
+                            href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="{{ url_for('main.blog') }}">New Post</a>
                         <a class="nav-item nav-link" href="{{ url_for('main.login') }}">Login</a>
                         <a class="nav-item nav-link" href="{{ url_for('main.register') }}">Register</a>
                     </div>
@@ -45,15 +49,10 @@
 
 
 
-    <main role="main" class="container">
-        <div class="row">
-            <div class="col-md-8">
-
-
+    <main role="main" class="container mt-5">
+            
                 {% block content %}{% endblock %}
-            </div>
-
-        </div>
+           
     </main>
 
 

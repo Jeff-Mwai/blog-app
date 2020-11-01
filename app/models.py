@@ -47,7 +47,7 @@ class Blog(db.Model):
     __tablename__ = 'blogs'
     id = db.Column(db.Integer,primary_key=True)
     title = db.Column(db.String(255),nullable=False)
-    content = db.Column(db.Text(),nullable=False)
+    blog_content = db.Column(db.Text(),nullable=False)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))               
 
@@ -66,6 +66,19 @@ class Blog(db.Model):
 
     def __repr__(self):
         return f'Blog {self.title}'
+
+class Subscriber(db.Model):
+    __tablename__='subscribers'
+
+    id=db.Column(db.Integer,primary_key=True)
+    email = db.Column(db.String(255),unique=True,index=True)
+
+    def save_subscriber(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'Subscriber {self.email}'
 
 
     

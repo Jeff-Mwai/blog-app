@@ -1,21 +1,17 @@
 from flask import Flask, render_template, url_for, flash, redirect, abort, request
 from . import main
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, BlogForm, UpdateProfile
 from app.requests import get_quotes
-from ..models import User, Blog
-from .. import db
+from ..models import User, Blog, Subscriber
+from .. import db, photos
 from flask_login import login_user,login_required, logout_user, current_user
 
 @main.route('/')
 def home():
     quotes = get_quotes()
     page = request.args.get('page',1, type = int )
-    blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page = page, per_page = 3)
+    blogs = Blog.query.order_by(Blog.posted.desc())
     return render_template('index.html', quote = quotes,blogs=blogs)
-
-@main.route('/about')
-def about():
-    return render_template('about.html', title = 'About')
 
 @main.route('/signout')
 @login_required
@@ -47,6 +43,71 @@ def login():
         flash('login unsuccessful. Please check your password or email', 'danger')
 
     return render_template('login.html', title = 'login', form = form)
+
+@main.route('/new_post', methods=['POST','GET'])
+@login_required
+def blog():
+    subscribers = Subscriber.query.all()
+    form = BlogForm()
+    if form.validate_on_submit():
+        title = form.title.data
+        blog_content = form.blog_content.data
+        user_id =  current_user._get_current_object().id
+        blog = Blog(title=title,blog_content=blog_content,user_id=user_id)
+        blog.save()
+        for subscriber in subscribers:
+            mail_message("New Blog Post","email/new_blog",subscriber.email,blog=blog)
+        return redirect(url_for('main.home'))
+        flash('You Posted a new Blog')
+    return render_template('blog.html', form = form)
+
+@main.route('/subscribe',methods = ['POST','GET'])
+def subscribe():
+    email = request.form.get('subscriber')
+    new_subscriber = Subscriber(email = email)
+    new_subscriber.save_subscriber()
+    mail_message("Subscribed to Blog App","email/welcome_subscriber",new_subscriber.email,new_subscriber=new_subscriber)
+    flash('Sucessfully subscribed')
+    return redirect(url_for('main.index'))
+
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)
+
+@main.route('/user/<uname>/update',methods = ['GET','POST'])
+@login_required
+def update_profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    if user is None:
+        abort(404)
+
+    form = UpdateProfile()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile',uname=user.username))
+
+    return render_template('profile/update.html',form =form)
+
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@login_required
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',uname=uname))
 
 
 

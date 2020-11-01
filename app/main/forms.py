@@ -18,3 +18,16 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
+
+class BlogForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    blog_content = TextAreaField('Blog Content', validators=[DataRequired()])
+    submit = SubmitField('Post')
+
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Comment', validators=[DataRequired()])
+    submit = SubmitField('Post')
+
+class UpdateProfile(FlaskForm):
+    bio = TextAreaField('Tell us about you.',validators = [Required()])
+    submit = SubmitField('Submit')
