@@ -15,6 +15,9 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     password_secure = db.Column(db.String(255))
+    comment = db.relationship('Comment',backref='user',lazy='dynamic')
+    blog = db.relationship('Blog',backref='user',lazy='dynamic')
+
 
 
     @property
@@ -85,15 +88,15 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.Text(),nullable = False)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'),nullable = False)
-    blog_id = db.Column(db.Integer,db.ForeignKey('pitches.id'),nullable = False)
+    blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'),nullable = False)
 
     def save_comment(self):
         db.session.add(self)
         db.session.commit()
 
     @classmethod
-    def get_comments(cls,pitch_id):
-        comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    def get_comments(cls,blog_id):
+        comments = Comment.query.filter_by(blog_id=blog_id).all()
 
         return comments
 

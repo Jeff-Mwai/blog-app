@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, flash, redirect, abort, request
 from . import main
-from .forms import RegistrationForm, LoginForm, BlogForm, UpdateProfile
+from .forms import RegistrationForm, LoginForm, BlogForm, UpdateProfile, CommentForm
 from app.requests import get_quotes
 from ..models import User, Blog, Subscriber, Comment
 from .. import db, photos
