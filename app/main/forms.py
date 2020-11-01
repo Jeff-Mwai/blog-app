@@ -17,3 +17,4 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators = [DataRequired(), Length(min = 4)])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
