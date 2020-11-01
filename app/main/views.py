@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, flash, redirect, abort, reque
 from . import main
 from .forms import RegistrationForm, LoginForm, BlogForm, UpdateProfile
 from app.requests import get_quotes
-from ..models import User, Blog, Subscriber
+from ..models import User, Blog, Subscriber, Comment
 from .. import db, photos
 from flask_login import login_user,login_required, logout_user, current_user
 
@@ -109,8 +109,20 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
-
-
+@main.route('/comment/<int:blog_id>', methods = ['POST','GET'])
+@login_required
+def comment(blog_id):
+    form = CommentForm()
+    comment = Comment.query.get(blog_id)
+    users_comments = Comment.query.filter_by(blog_id = blog_id).all()
+    if form.validate_on_submit():
+        comment = form.comment.data 
+        blog_id = blog_id
+        user_id = current_user._get_current_object().id
+        new_comment = Comment(comment = comment,user_id = user_id,blog_id = blog_id)
+        new_comment.save_comment()
+        return redirect(url_for('.comment', blog_id = blog_id))
+    return render_template('comment.html', form =form, comment = comment,users_comments=users_comments)
 
 
 
