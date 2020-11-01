@@ -1,13 +1,17 @@
 from flask import Flask, render_template, url_for, flash, redirect, abort, request
 from . import main
 from .forms import RegistrationForm, LoginForm
-from ..models import User
+from app.requests import get_quotes
+from ..models import User, Blog
 from .. import db
 from flask_login import login_user,login_required, logout_user, current_user
 
 @main.route('/')
 def home():
-    return render_template('index.html')
+    quotes = get_quotes()
+    page = request.args.get('page',1, type = int )
+    blogs = Blog.query.order_by(Blog.posted.desc()).paginate(page = page, per_page = 3)
+    return render_template('index.html', quote = quotes,blogs=blogs)
 
 @main.route('/about')
 def about():
