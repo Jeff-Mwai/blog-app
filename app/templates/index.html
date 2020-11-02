@@ -59,7 +59,7 @@
         <li class="list-inline-item pr-2"><a href="/comment/{{blog.id}}" class="white-text"><i class="far fa-comments pr-1"></i></a>
         </div>
         <div class="col-md-4">
-        <li class="list-inline-item pr-2"><a href="{{ url_for('main.delete_blog', blog_id=blog.id) }}" class="white-text"><i class="fa fa-trash pr-1"></i></a>
+        <li class="list-inline-item pr-2"><a href="{{url_for('main.delete_blog', blog_id=blog.id) }}" class="white-text"><i class="fa fa-trash text-danger pr-1"></i></a>
         
         </div>
         </div>

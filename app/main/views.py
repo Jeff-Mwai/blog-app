@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, flash, redirect, abort, reque
 from . import main
 from .forms import RegistrationForm, LoginForm, BlogForm, UpdateProfile, CommentForm
 from app.requests import get_quotes
-from ..models import User, Blog, Subscriber, Comment
+from ..models import User, Blog, Comment
 from .. import db, photos
 from flask_login import login_user,login_required, logout_user, current_user
 
@@ -47,7 +47,6 @@ def login():
 @main.route('/new_post', methods=['POST','GET'])
 @login_required
 def blog():
-    subscribers = Subscriber.query.all()
     form = BlogForm()
     if form.validate_on_submit():
         title = form.title.data
@@ -55,20 +54,8 @@ def blog():
         user_id =  current_user._get_current_object().id
         blog = Blog(title=title,blog_content=blog_content,user_id=user_id)
         blog.save()
-        for subscriber in subscribers:
-            mail_message("New Blog Post","email/new_blog",subscriber.email,blog=blog)
-        return redirect(url_for('main.home'))
-        flash('You Posted a new Blog')
+        return redirect(url_for('.home'))
     return render_template('blog.html', form = form)
-
-@main.route('/subscribe',methods = ['POST','GET'])
-def subscribe():
-    email = request.form.get('subscriber')
-    new_subscriber = Subscriber(email = email)
-    new_subscriber.save_subscriber()
-    mail_message("Subscribed to Blog App","email/welcome_subscriber",new_subscriber.email,new_subscriber=new_subscriber)
-    flash('Sucessfully subscribed')
-    return redirect(url_for('main.index'))
 
 @main.route('/user/<uname>')
 def profile(uname):
@@ -124,13 +111,11 @@ def comment(blog_id):
         return redirect(url_for('.comment', blog_id = blog_id))
     return render_template('comment.html', form =form, comment = comment,users_comments=users_comments)
 
-@main.route('/blog/<blog_id>/delete', methods = ['POST'])
+@main.route('/blog/<blog_id>/delete', methods = ['POST','GET'])
 @login_required
 def delete_blog(blog_id):
     blog = Blog.query.get(blog_id)
-    if blog.user != current_user:
-        abort(403)
-    blog.delete()
+    Blog.delete(blog)
     flash("You have deleted your Blog succesfully!")
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.home'))
 
