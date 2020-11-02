@@ -1,31 +1,32 @@
-# Blog-X
-Blog-X is a personal blogging website where you can create and share your opinions and other users can read and comment on them. blog-x also has random quotes that inspire the users. 
+# Blog-App
 
 ## Author
-> Victor Waichigo K.
+[Jeff-Mwai](https://github.com/Jeff-Mwai)
 
+## Description
+Blog-App is a blogging website that is created using flask. It provides a platform where other people can create their own blogs, edit them and even delete. Blog-App also has random quotes to inspire other people.
 
-## Screenshot
-<img src="https://github.com/kamauvick/blog-X/blob/master/app/static/assets/screenshot.png?raw=true" width="1000">
+## Live Link
+[View Site]()
 
 
 ## Requirements
 
-The following command installs all the application requirements
+Use this command to install all the application requirements
 >``pip freeze -r requirements.txt``
 
 
 ## Installations
 
 Run 
-``git clone https://github.com/kamauvick/blog-X.git``
+``git clone https://github.com/Jeff-Mwai/blog-app.git``
 
 or download the zip file from github.
 
 After extracting the files, 
 
 1. Navigate to the project folder
->`` cd blog-X.`` 
+>`` cd blog-app.`` 
 
 2. Creating a virtual environment
 >``virtualenv virtual.``
@@ -36,9 +37,6 @@ After extracting the files,
 4. Running the application
 >``python3 manage.py server``
 
-5. Running tests
-
- > ``python3 manage.py test.``
 
 
 ## Technologies used
@@ -65,30 +63,35 @@ After extracting the files,
 
 | Inputs |  Description |
 | :---         |          ---: |
-| Username  | Account username, ``eg johndoe``|
-| Password  | Account password, ``eg parseword``|
+| Username  | Account username, ``eg Jeffa``|
+| Password  | Account password, ``eg 12345``|
 
 >Signup inputs
 
 | Inputs |  Description |
 | :---         |          ---: |
-| Username  | Account username, ``eg johndoe``|
-| Email  | User email, ``eg morty@testmail.com``|
-| Password  | Account password, ``eg parseword``|
-| Confirm Password  | Account password, ``eg parseword``|
+| Username  | Account username, ``eg Jeffa``|
+| Email  | User email, ``eg jeffa@gmail.com``|
+| Password  | Account password, ``eg 12345``|
+| Confirm Password  | Account password, ``eg 12345``|
 
 > Blog inputs
 
 | Inputs | Description  |
 |---|---|
-|  Blog title | the title of the blog eg; `` Car news``  |
+|  Blog title | the title of the blog eg; `` Hustle``  |
 |  Blog post| The blog post itself|
 | Comment| A comment on the blog post|
 
 
+## Known Bugs
+* The application does not have any known bugs currently
+
+## Contact Information 
+
+In case you have any question or contributions, kindly reach me through my email [jeffmwai3@gmail.com]
 
 ## License
-> MIT License &copy; 2019 Victor Waichigo
+* [[License: MIT]](LICENCE.md)
+* Copyright (c) 2019 **Jeffrey Mwai**
 
-## Collaborate
-To collaborate, reach me on [waichigovick@gmail.com]()
