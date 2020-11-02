@@ -6,12 +6,17 @@ from ..models import User, Blog, Comment
 from .. import db, photos
 from flask_login import login_user,login_required, logout_user, current_user
 
-@main.route('/')
+@main.route('/display_blog')
 def home():
     quotes = get_quotes()
     page = request.args.get('page',1, type = int )
+    return render_template('index.html', quote = quotes)
+
+@main.route('/')
+@login_required
+def display_blog():
     blogs = Blog.query.order_by(Blog.posted.desc())
-    return render_template('index.html', quote = quotes,blogs=blogs)
+    return render_template('display_blogs.html',blogs=blogs)
 
 @main.route('/signout')
 @login_required
@@ -54,7 +59,7 @@ def blog():
         user_id =  current_user._get_current_object().id
         blog = Blog(title=title,blog_content=blog_content,user_id=user_id)
         blog.save()
-        return redirect(url_for('.home'))
+        return redirect(url_for('.display_blog'))
     return render_template('blog.html', form = form)
 
 @main.route('/user/<uname>')
@@ -116,7 +121,6 @@ def comment(blog_id):
 def delete_blog(blog_id):
     blog = Blog.query.get(blog_id)
     Blog.delete(blog)
-    flash("You have deleted your Blog succesfully!")
     return redirect(url_for('main.home'))
 
 @main.route('/comment/<comment_id>/delete', methods = ['POST','GET'])

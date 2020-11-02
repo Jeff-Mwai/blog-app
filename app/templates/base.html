@@ -35,11 +35,12 @@
                         <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
                         <a class="nav-item nav-link"
                             href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
-                        <a class="nav-item nav-link" href="{{ url_for('main.blog') }}">All Blogs</a>
+                        <a class="nav-item nav-link" href="{{ url_for('main.display_blog') }}">All Blogs</a>
                     </div>
                     <!-- Navbar Right Side -->
                     <div class="navbar-nav">
                         <a class="nav-item nav-link" href="{{ url_for('main.blog') }}">New Post</a>
+                        <a class="nav-item nav-link" href="{{url_for('main.signout')}}">Sign Out</a>
                         <a class="nav-item nav-link" href="{{ url_for('main.login') }}">Login</a>
                         <a class="nav-item nav-link" href="{{ url_for('main.register') }}">Register</a>
                     </div>
