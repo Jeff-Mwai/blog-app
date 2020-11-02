@@ -124,5 +124,13 @@ def comment(blog_id):
         return redirect(url_for('.comment', blog_id = blog_id))
     return render_template('comment.html', form =form, comment = comment,users_comments=users_comments)
 
-
+@main.route('/blog/<blog_id>/delete', methods = ['POST'])
+@login_required
+def delete_blog(blog_id):
+    blog = Blog.query.get(blog_id)
+    if blog.user != current_user:
+        abort(403)
+    blog.delete()
+    flash("You have deleted your Blog succesfully!")
+    return redirect(url_for('main.index'))
 

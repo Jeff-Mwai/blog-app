@@ -14,7 +14,7 @@
 <div class="card">
 
     <!-- Card content -->
-    <div class="card-body elegant-color white-text rounded-bottom mb-5">
+    <div class="card-body elegant-color white-text rounded-bottom">
 
         <!-- Social shares button -->
         <a class="activator waves-effect mr-4"><i class="white-text"></i></a>
@@ -51,9 +51,18 @@
     <!-- Card footer -->
     <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
         <ul class="list-unstyled list-inline font-small">
-            <li class="list-inline-item pr-2 white-text"><i class="far fa-clock pr-1"></i>{{ blog.posted }} </li>
-            <li class="list-inline-item pr-2"><a href="/comment/{{blog.id}}" class="white-text"><i class="far fa-comments pr-1"></i>12</a>
-            </li>
+        <div class="row">
+        <div class="col-md-4">
+         <li class="list-inline-item pr-2 white-text"><i class="far fa-clock pr-1"></i>{{ blog.posted }} </li>    
+        </div>
+        <div class="col-md-4">
+        <li class="list-inline-item pr-2"><a href="/comment/{{blog.id}}" class="white-text"><i class="far fa-comments pr-1"></i></a>
+        </div>
+        <div class="col-md-4">
+        <li class="list-inline-item pr-2"><a href="{{ url_for('main.delete_blog', blog_id=blog.id) }}" class="white-text"><i class="fa fa-trash pr-1"></i></a>
+        
+        </div>
+        </div>
         </ul>
     </div>
 
