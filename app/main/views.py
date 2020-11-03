@@ -12,7 +12,7 @@ def home():
     page = request.args.get('page',1, type = int )
     return render_template('index.html', quote = quotes)
 
-@main.route('/')
+@main.route('/display_blog')
 @login_required
 def display_blog():
     blogs = Blog.query.order_by(Blog.posted.desc())
