@@ -6,7 +6,7 @@ from ..models import User, Blog, Comment
 from .. import db, photos
 from flask_login import login_user,login_required, logout_user, current_user
 
-@main.route('/display_blog')
+@main.route('/')
 def home():
     quotes = get_quotes()
     page = request.args.get('page',1, type = int )
