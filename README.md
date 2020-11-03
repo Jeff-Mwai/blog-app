@@ -7,7 +7,10 @@
 Blog-App is a blogging website that is created using flask. It provides a platform where other people can create their own blogs, edit them and even delete. Blog-App also has random quotes to inspire other people.
 
 ## Live Link
-[View Site]()
+[View Site](https://blog-2020.herokuapp.com/)
+
+## Figma Link
+https://www.figma.com/file/aa3iKF0JbEHnhtPkLp1noP/Blog-app?node-id=0%3A1
 
 
 ## Requirements
